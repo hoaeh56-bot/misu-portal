@@ -122,10 +122,8 @@
 </head>
 <body>
 
-    <!-- ДЕБАГ ПЛАШКА -->
     <div class="debug-bar" id="debug-bar">ID: Загрузка...</div>
 
-    <!-- ЭКРАН: МАРКЕТ -->
     <div id="screen-market" class="screen active">
         <div class="header">
             <div class="avatar"><img id="header-avatar" src="https://i.pravatar.cc/100?img=11"></div>
@@ -171,7 +169,6 @@
         </div>
     </div>
 
-    <!-- ЭКРАН: ПРОФИЛЬ -->
     <div id="screen-profile" class="screen">
         <div class="profile-header">
             <div class="profile-avatar"><img id="profile-avatar-img" src="https://i.pravatar.cc/100?img=11"></div>
@@ -202,7 +199,6 @@
         </div>
     </div>
 
-    <!-- НИЖНЕЕ МЕНЮ -->
     <div class="bottom-nav">
         <div class="nav-item active" id="nav-market" onclick="switchTab('market')">
             <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg>
@@ -214,21 +210,18 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА: ДЕТАЛИ -->
     <div class="overlay" id="detail-modal" onclick="closeModal('detail-modal')">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="drag-handle"></div>
             <img id="det-img" class="detail-img" src="https://placehold.co/140x140/2a2a2d/ffffff?text=Gift">
             <div id="det-title" class="detail-title">Название</div>
             <div id="det-id" class="detail-id">#0000</div>
-
             <div class="attr-box">
                 <div class="attr-row">
                     <span class="attr-label">Model</span>
                     <span class="attr-value">Plastic Beach</span>
                 </div>
             </div>
-
             <div class="action-buttons">
                 <button class="btn-offer" onclick="openOffer()">Сделать оффер<br><span>0.01 GRAM</span></button>
                 <button class="btn-buy-main" onclick="openBuy()">Купить подарок<br><span id="det-price">0.00 GRAM</span></button>
@@ -236,12 +229,10 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА: ОФФЕР -->
     <div class="overlay" id="offer-modal" onclick="closeModal('offer-modal')">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="drag-handle"></div>
             <div class="sheet-title">Ваше предложение</div>
-
             <div class="item-info-box">
                 <img class="item-info-img" src="https://placehold.co/60x60/2a2a2d/ffffff?text=Gift">
                 <div class="item-info-text">
@@ -253,32 +244,26 @@
                     <div>Цена подарка</div>
                 </div>
             </div>
-
             <div class="toggle-row">
                 <div class="toggle-btn">24 часа</div>
                 <div class="toggle-btn">7 дней</div>
                 <div class="toggle-btn active">Бессрочно</div>
             </div>
-
             <div class="input-group">
                 <input type="number" placeholder="Цена" value="5.00">
                 <span>GRAM</span>
             </div>
-
             <div class="info-line"><span>Доступный баланс</span><span id="off-balance">0.00 GRAM</span></div>
             <div class="info-line" style="margin-bottom: 15px;"><span>Вознаграждение</span><span style="color: #facc15;">0 ✦</span></div>
-
             <button class="btn-full" onclick="closeModal('offer-modal')">Отправить оффер</button>
         </div>
     </div>
 
-    <!-- МОДАЛКА: ПОКУПКА -->
     <div class="overlay" id="buy-modal" onclick="closeModal('buy-modal')">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="drag-handle"></div>
             <div class="sheet-title">Купить подарок</div>
             <div class="sheet-subtitle">Вы уверены, что хотите купить этот подарок?</div>
-
             <div class="item-info-box">
                 <img class="item-info-img" src="https://placehold.co/60x60/2a2a2d/ffffff?text=Gift">
                 <div class="item-info-text">
@@ -290,12 +275,9 @@
                     <div>Цена подарка</div>
                 </div>
             </div>
-
             <div class="info-line"><span>Доступный баланс</span><span id="buy-balance">0.00 GRAM</span></div>
             <div class="info-line"><span>Вознаграждение за покупку</span><span style="color: #facc15;" id="buy-reward">0 ✦</span></div>
-
             <div class="error-text" id="buy-error">Недостаточный баланс</div>
-
             <button class="btn-full" onclick="confirmBuy()">
                 Купить подарок
                 <span id="buy-btn-price">0.00 GRAM</span>
@@ -304,20 +286,17 @@
     </div>
 
     <script>
-        // === ИНИЦИАЛИЗАЦИЯ SUPABASE ===
         const SUPABASE_URL = "https://ptcofqwsvyytcnoerazu.supabase.co";
         const SUPABASE_ANON_KEY = "sb_publishable_CL2wAd6YW9tj5fIq4r9b4A_iVeZtnBx";
         const { createClient } = supabase;
         const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
+        tg.ready(); tg.expand();
 
         let currentUserId = null;
         let currentGramBalance = 0;
 
-        // === ФИКС СЧИТЫВАНИЯ ПРОФИЛЯ ===
         function loadUserProfile() {
             let user = null;
             let debugInfo = "Пусто";
@@ -329,14 +308,10 @@
                 try {
                     const params = new URLSearchParams(tg.initData);
                     const userStr = params.get('user');
-                    if (userStr) {
-                        user = JSON.parse(userStr);
-                        debugInfo = "Parsed initData OK";
-                    }
+                    if (userStr) { user = JSON.parse(userStr); debugInfo = "Parsed initData OK"; }
                 } catch(e) { debugInfo = "Parse Error"; }
             }
 
-            // Если нашли юзера
             if (user) {
                 currentUserId = user.id;
                 const avatarUrl = user.photo_url || 'https://i.pravatar.cc/100?img=11';
@@ -347,63 +322,56 @@
                 if (user.last_name) fullName += ' ' + user.last_name;
                 document.getElementById('profile-name').innerText = fullName.trim() || 'Пользователь';
                 document.getElementById('profile-username').innerText = user.username ? '@' + user.username : '@no_username';
-            } 
-            // Если нет, берем из URL
-            else {
+            } else {
                 const urlParams = new URLSearchParams(window.location.search);
                 const urlId = urlParams.get('user_id');
                 if (urlId) {
                     currentUserId = parseInt(urlId);
                     debugInfo += " | URL ID OK";
-                    document.getElementById('profile-name').innerText = 'Пользователь';
-                    document.getElementById('profile-username').innerText = 'ID: ' + currentUserId;
                 } else {
-                    document.getElementById('profile-name').innerText = 'Не авторизован';
-                    document.getElementById('profile-username').innerText = 'Нет данных';
                     debugInfo += " | ALL FAILED";
                 }
             }
 
-            // Выводим отладку на экран
             document.getElementById('debug-bar').innerText = `Статус: ${debugInfo} | ID: ${currentUserId || 0}`;
-
-            // Загружаем баланс
             loadBalances();
         }
 
-        // === ЗАГРУЗКА БАЛАНСА ===
         async function loadBalances() {
             if (!currentUserId) return;
             try {
-                let { data } = await db.from('users').select('gram_balance, balance').eq('user_id', currentUserId).limit(1);
+                let { data } = await db.from('users').select('gram_balance, balance, username, first_name').eq('user_id', currentUserId).limit(1);
                 
                 if (!data || data.length === 0) {
                     const walletAddress = 'T' + Math.random().toString(36).substring(2, 15).toUpperCase();
                     await db.from('users').insert({ user_id: currentUserId, wallet_address: walletAddress });
-                    data = [{ gram_balance: 0, balance: 0 }];
+                    data = [{ gram_balance: 0, balance: 0, username: '', first_name: 'Пользователь' }];
                 }
 
-                currentGramBalance = parseFloat(data[0].gram_balance) || 0;
-                const crystals = parseInt(data[0].balance) || 0;
+                const u = data[0];
+                
+                if (u.first_name) document.getElementById('profile-name').innerText = u.first_name;
+                if (u.username) document.getElementById('profile-username').innerText = '@' + u.username;
+                else document.getElementById('profile-username').innerText = 'ID: ' + currentUserId;
+
+                currentGramBalance = parseFloat(u.gram_balance) || 0;
+                const crystals = parseInt(u.balance) || 0;
 
                 document.getElementById('header-balance').innerText = currentGramBalance.toFixed(2) + ' GRAM';
-                
                 document.getElementById('profile-gram-balance').innerHTML = `<svg viewBox="0 0 24 24" fill="#3b82f6" style="width:18px; height:18px;"><path d="M12 2L2 12l10 10 10-10L12 2zm0 3l7 7-7 7-7-7 7-7z"/></svg> ` + currentGramBalance.toFixed(2);
-                
                 document.getElementById('profile-stars-balance').innerHTML = `<svg viewBox="0 0 24 24" fill="#facc15" style="width:18px; height:18px;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> ` + crystals;
 
                 document.getElementById('off-balance').innerText = currentGramBalance.toFixed(2) + ' GRAM';
                 document.getElementById('buy-balance').innerText = currentGramBalance.toFixed(2) + ' GRAM';
 
             } catch (e) {
-                console.error("Ошибка баланса:", e);
+                console.error("Ошибка:", e);
             }
         }
 
         function switchTab(tabId) {
             document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
             document.getElementById('screen-' + tabId).classList.add('active');
-            
             if(tabId === 'market') {
                 document.getElementById('nav-market').classList.add('active');
                 document.getElementById('nav-profile').classList.remove('active');
@@ -445,7 +413,6 @@
             } else {
                 document.getElementById('buy-error').style.display = 'none';
             }
-
             setTimeout(() => document.getElementById('buy-modal').classList.add('active'), 200);
         }
 
@@ -494,4 +461,4 @@
         loadUserProfile();
     </script>
 </body>
-</html>
+                    </html>
