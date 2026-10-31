@@ -28,6 +28,11 @@
         .cat-icon svg { width: 28px; height: 28px; fill: var(--text); }
         .cat-item span { font-size: 0.85rem; font-weight: 600; }
 
+        .search-row { display: flex; gap: 12px; padding: 0 20px; margin-bottom: 20px; }
+        .search-wrapper { flex: 1; background: var(--card); border-radius: 14px; display: flex; align-items: center; padding: 0 16px; border: 1px solid var(--border); }
+        .search-wrapper svg { width: 20px; height: 20px; fill: var(--text-secondary); margin-right: 10px; }
+        .search-wrapper input { background: transparent; border: none; color: var(--text); width: 100%; padding: 16px 0; font-size: 1rem; outline: none; }
+
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; }
         .card { background: var(--card); border-radius: 18px; padding: 12px; border: 1px solid var(--border); position: relative; cursor: pointer; }
         .card-image { width: 100%; aspect-ratio: 1; background: #2a2a2d; border-radius: 14px; margin-bottom: 12px; overflow: hidden; }
@@ -38,9 +43,11 @@
         .card-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
         .price-btn { flex: 1; background: var(--accent); color: white; padding: 10px; border-radius: 12px; font-size: 0.95rem; font-weight: 700; display: flex; justify-content: center; align-items: center; gap: 5px; }
         .price-btn svg { width: 14px; height: 14px; fill: white; }
+        .buy-btn { width: 40px; height: 40px; background: #2c2c2e; border-radius: 12px; display: flex; justify-content: center; align-items: center; }
+        .buy-btn svg { width: 20px; height: 20px; fill: var(--text); }
 
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 15, 17, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--border); z-index: 100; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 0.8rem; font-weight: 600; width: 33%; cursor: pointer; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 0.8rem; font-weight: 600; width: 50%; cursor: pointer; }
         .nav-item.active { color: var(--accent); }
         .nav-item svg { width: 26px; height: 26px; fill: currentColor; }
 
@@ -54,6 +61,11 @@
         .balance-card { flex: 1; background: var(--card); padding: 20px; border-radius: 18px; border: 1px solid var(--border); text-align: center; }
         .balance-card-title { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px; }
         .balance-card-value { font-size: 1.3rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        
+        .btn-inventory { width: 100%; max-width: 400px; background: var(--accent); color: white; padding: 18px; border-radius: 16px; font-size: 1.1rem; font-weight: 800; border: none; display: flex; justify-content: center; align-items: center; gap: 10px; cursor: pointer; }
+
+        .inventory-header { display: flex; align-items: center; padding: 15px; gap: 10px; }
+        .back-btn { background: var(--card); border: 1px solid var(--border); color: white; width: 36px; height: 36px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; cursor: pointer; }
 
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: flex-end; z-index: 1000; }
         .overlay.active { display: flex; }
@@ -61,11 +73,23 @@
         .overlay.active .bottom-sheet { transform: translateY(0); }
         .drag-handle { width: 40px; height: 5px; background: #444; border-radius: 3px; margin: 0 auto 20px auto; }
 
+        .detail-img { width: 140px; height: 140px; border-radius: 24px; margin: 0 auto 15px auto; display: block; background: #2a2a2d; object-fit: cover; }
+        .detail-title { font-size: 1.5rem; font-weight: 800; text-align: center; margin-bottom: 4px; }
+        .detail-id { font-size: 1rem; color: var(--text-secondary); text-align: center; margin-bottom: 20px; }
+        
+        .attr-box { background: #121214; border-radius: 16px; padding: 15px; margin-bottom: 20px; border: 1px solid var(--border); }
+        .attr-row { display: flex; justify-content: space-between; align-items: center; font-size: 1rem; }
+        .attr-label { color: var(--text-secondary); }
+        .attr-value { font-weight: 700; color: var(--accent); }
+
+        .action-buttons { display: flex; gap: 12px; }
+        .btn-offer { flex: 1; background: #2c2c2e; color: var(--text); padding: 15px; border-radius: 14px; font-size: 1rem; font-weight: 700; text-align: center; border: none; display: flex; flex-direction: column; justify-content: center; cursor: pointer; }
+        .btn-offer span { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+        .btn-buy-main { flex: 1.2; background: var(--accent); color: white; padding: 15px; border-radius: 14px; font-size: 1.05rem; font-weight: 800; text-align: center; border: none; display: flex; flex-direction: column; justify-content: center; line-height: 1.3; cursor: pointer; }
+        .btn-buy-main span { font-size: 0.85rem; font-weight: 600; opacity: 0.9; margin-top: 4px; }
+
         .sheet-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
-        .input-group { background: #121214; border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; padding: 0 15px; margin-bottom: 15px; height: 55px; }
-        .input-group input { background: transparent; border: none; color: white; font-size: 1rem; outline: none; width: 100%; font-weight: 600; }
-        .btn-full { width: 100%; background: var(--accent); color: white; padding: 18px; border-radius: 16px; font-size: 1.1rem; font-weight: 800; border: none; margin-top: 15px; cursor: pointer; }
-        .btn-full.secondary { background: #2c2c2e; }
+        .sheet-subtitle { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px; }
         
         .item-info-box { display: flex; gap: 15px; margin-bottom: 20px; align-items: center; background: #121214; padding: 15px; border-radius: 16px; border: 1px solid var(--border); }
         .item-info-img { width: 60px; height: 60px; border-radius: 12px; background: #2a2a2d; object-fit: cover; }
@@ -74,6 +98,23 @@
         .item-info-text p { font-size: 0.85rem; color: var(--text-secondary); }
         .item-info-price { text-align: right; }
         .item-info-price div:first-child { font-size: 1.1rem; font-weight: 800; }
+        .item-info-price div:last-child { font-size: 0.75rem; color: var(--text-secondary); }
+
+        .info-line { display: flex; justify-content: space-between; font-size: 1rem; color: var(--text-secondary); margin-bottom: 10px; padding: 0 5px; }
+        .info-line span:last-child { color: white; font-weight: 700; }
+        
+        .error-text { color: #ef4444; font-size: 0.9rem; text-align: center; margin: 10px 0; display: none; font-weight: 600; }
+        
+        .btn-full { width: 100%; background: var(--accent); color: white; padding: 18px; border-radius: 16px; font-size: 1.1rem; font-weight: 800; border: none; margin-top: 15px; display: flex; flex-direction: column; align-items: center; line-height: 1.3; cursor: pointer; }
+        .btn-full span { font-size: 0.9rem; font-weight: 600; opacity: 0.9; }
+        
+        .toggle-row { display: flex; background: #121214; border-radius: 12px; padding: 5px; margin-bottom: 15px; border: 1px solid var(--border); }
+        .toggle-btn { flex: 1; padding: 12px; text-align: center; font-size: 0.9rem; font-weight: 700; color: var(--text-secondary); border-radius: 8px; }
+        .toggle-btn.active { background: #2c2c2e; color: white; }
+        
+        .input-group { background: #121214; border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; padding: 0 15px; margin-bottom: 15px; height: 55px; }
+        .input-group input { background: transparent; border: none; color: white; font-size: 1rem; outline: none; width: 100%; font-weight: 600; }
+        .input-group span { color: var(--text-secondary); font-size: 0.9rem; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -87,13 +128,24 @@
                 <span id="header-balance">0.00 GRAM</span>
             </div>
         </div>
-        <div class="grid" id="market-grid"><p style="text-align:center; width:100%;">Загрузка...</p></div>
-    </div>
 
-    <!-- ЭКРАН: ИНВЕНТАРЬ -->
-    <div id="screen-inventory" class="screen">
-        <div class="header"><h1 style="font-size: 1.5rem;">Мой Инвентарь</h1></div>
-        <div class="grid" id="inventory-grid"><p style="text-align:center; width:100%;">Загрузка...</p></div>
+        <div class="categories">
+            <div class="cat-item active">
+                <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg></div>
+                <span>Все</span>
+            </div>
+        </div>
+
+        <div class="search-row">
+            <div class="search-wrapper">
+                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input type="text" placeholder="Быстрый поиск">
+            </div>
+        </div>
+
+        <div class="grid" id="market-grid">
+            <p style="text-align:center; width:100%; color:#888;">Загрузка...</p>
+        </div>
     </div>
 
     <!-- ЭКРАН: ПРОФИЛЬ -->
@@ -102,28 +154,45 @@
             <div class="profile-avatar"><img id="profile-avatar-img" src="https://api.dicebear.com/7.x/bottts/svg?seed=default"></div>
             <div class="profile-name" id="profile-name">Загрузка...</div>
             <div class="profile-username" id="profile-username">@...</div>
+
             <div class="balances-row">
                 <div class="balance-card">
                     <div class="balance-card-title">Баланс GRAM</div>
-                    <div class="balance-card-value" id="profile-gram-balance" style="color: #3b82f6;">0.00</div>
+                    <div class="balance-card-value" id="profile-gram-balance" style="color: #3b82f6;">
+                        <svg viewBox="0 0 24 24" fill="#3b82f6" style="width:18px; height:18px;"><path d="M12 2L2 12l10 10 10-10L12 2zm0 3l7 7-7 7-7-7 7-7z"/></svg> 0.00
+                    </div>
                 </div>
                 <div class="balance-card">
                     <div class="balance-card-title">Кристаллы</div>
-                    <div class="balance-card-value" id="profile-stars-balance" style="color: #facc15;">0</div>
+                    <div class="balance-card-value" id="profile-stars-balance" style="color: #facc15;">
+                        <svg viewBox="0 0 24 24" fill="#facc15" style="width:18px; height:18px;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 0
+                    </div>
                 </div>
             </div>
+
+            <button class="btn-inventory" onclick="switchTab('inventory')">
+                <svg viewBox="0 0 24 24" fill="white" style="width: 20px; height: 20px;"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg>
+                Мой Инвентарь
+            </button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН: ИНВЕНТАРЬ -->
+    <div id="screen-inventory" class="screen">
+        <div class="inventory-header">
+            <button class="back-btn" onclick="switchTab('profile')">←</button>
+            <h2 style="font-size: 1.2rem; font-weight: 700;">Инвентарь</h2>
+        </div>
+        <div class="grid" id="inventory-grid">
+            <p style="text-align:center; width:100%; color:#888;">Загрузка...</p>
         </div>
     </div>
 
     <!-- НИЖНЕЕ МЕНЮ -->
     <div class="bottom-nav">
         <div class="nav-item active" id="nav-market" onclick="switchTab('market')">
-            <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg>
             <span>Маркет</span>
-        </div>
-        <div class="nav-item" id="nav-inventory" onclick="switchTab('inventory')">
-            <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1z"/></svg>
-            <span>Инвентарь</span>
         </div>
         <div class="nav-item" id="nav-profile" onclick="switchTab('profile')">
             <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
@@ -131,23 +200,116 @@
         </div>
     </div>
 
-    <!-- МОДАЛКИ -->
+    <!-- МОДАЛКА: ДЕТАЛИ -->
+    <div class="overlay" id="detail-modal" onclick="closeModal('detail-modal')">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="drag-handle"></div>
+            <img id="det-img" class="detail-img" src="https://placehold.co/140x140/2a2a2d/ffffff?text=Gift">
+            <div id="det-title" class="detail-title">Название</div>
+            <div id="det-id" class="detail-id">#0000</div>
+
+            <div class="attr-box">
+                <div class="attr-row">
+                    <span class="attr-label">Model</span>
+                    <span class="attr-value">Plastic Beach</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-offer" onclick="openOffer()">Сделать оффер<br><span>0.01 GRAM</span></button>
+                <button class="btn-buy-main" onclick="openBuy()">Купить подарок<br><span id="det-price">0.00 GRAM</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА: ОФФЕР -->
+    <div class="overlay" id="offer-modal" onclick="closeModal('offer-modal')">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="drag-handle"></div>
+            <div class="sheet-title">Ваше предложение</div>
+
+            <div class="item-info-box">
+                <img class="item-info-img" src="https://placehold.co/60x60/2a2a2d/ffffff?text=Gift">
+                <div class="item-info-text">
+                    <h4 id="off-title">Название</h4>
+                    <p id="off-id">#0000</p>
+                </div>
+                <div class="item-info-price">
+                    <div>8.48 GRAM</div>
+                    <div>Цена подарка</div>
+                </div>
+            </div>
+
+            <div class="toggle-row">
+                <div class="toggle-btn">24 часа</div>
+                <div class="toggle-btn">7 дней</div>
+                <div class="toggle-btn active">Бессрочно</div>
+            </div>
+
+            <div class="input-group">
+                <input type="number" placeholder="Цена" value="5.00">
+                <span>GRAM</span>
+            </div>
+
+            <div class="info-line"><span>Доступный баланс</span><span id="off-balance">0.00 GRAM</span></div>
+            <div class="info-line" style="margin-bottom: 15px;"><span>Вознаграждение</span><span style="color: #facc15;">0 ✦</span></div>
+
+            <button class="btn-full" onclick="closeModal('offer-modal')">Отправить оффер</button>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА: ПОКУПКА -->
+    <div class="overlay" id="buy-modal" onclick="closeModal('buy-modal')">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="drag-handle"></div>
+            <div class="sheet-title">Купить подарок</div>
+            <div class="sheet-subtitle">Вы уверены, что хотите купить этот подарок?</div>
+
+            <div class="item-info-box">
+                <img id="buy-img" class="item-info-img" src="https://placehold.co/60x60/2a2a2d/ffffff?text=Gift">
+                <div class="item-info-text">
+                    <h4 id="buy-title">Название</h4>
+                    <p id="buy-id">#0000</p>
+                </div>
+                <div class="item-info-price">
+                    <div id="buy-price">0.00 GRAM</div>
+                    <div>Цена подарка</div>
+                </div>
+            </div>
+
+            <div class="info-line"><span>Доступный баланс</span><span id="buy-balance">0.00 GRAM</span></div>
+            <div class="info-line"><span>Вознаграждение за покупку</span><span style="color: #facc15;" id="buy-reward">0 ✦</span></div>
+
+            <div class="error-text" id="buy-error">Недостаточный баланс</div>
+
+            <button class="btn-full" onclick="confirmBuy()">
+                Купить подарок
+                <span id="buy-btn-price">0.00 GRAM</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА: ДЕЙСТВИЯ С ИНВЕНТАРЕМ -->
     <div class="overlay" id="inv-action-modal" onclick="closeModal('inv-action-modal')">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="drag-handle"></div>
             <div class="sheet-title" id="inv-gift-name">Название</div>
-            <p style="color: var(--text-secondary); margin-bottom: 20px;">Что вы хотите сделать?</p>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">Что вы хотите сделать с этим подарком?</p>
             <button class="btn-full" onclick="openSellModalFromInv()">Выставить на продажу</button>
-            <button class="btn-full secondary" onclick="withdrawGift()">Вывод</button>
+            <button class="btn-full secondary" style="background: #2c2c2e;" onclick="withdrawGift()">Вывод</button>
         </div>
     </div>
 
+    <!-- МОДАЛКА: ПРОДАЖА -->
     <div class="overlay" id="sell-modal" onclick="closeModal('sell-modal')">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="drag-handle"></div>
-            <div class="sheet-title">Продажа</div>
+            <div class="sheet-title">Выставить на продажу</div>
             <p style="color: var(--text-secondary); margin-bottom: 15px;" id="sell-gift-name">Название</p>
-            <div class="input-group"><input type="number" id="sell-price" placeholder="Цена в GRAM" value="10"></div>
+            <div class="input-group">
+                <input type="number" id="sell-price" placeholder="Цена в GRAM" value="10">
+                <span>GRAM</span>
+            </div>
             <button class="btn-full" onclick="confirmSell()">Выставить</button>
         </div>
     </div>
@@ -170,12 +332,12 @@
             currentUserId = parseInt(urlParams.get('user_id')) || (tg.initDataUnsafe?.user?.id);
             if (!currentUserId) return;
 
-            // Загружаем данные (включая аватарку)
             await loadBalances();
             loadMarket();
             loadInventory();
         }
 
+        // === ФИКС АВАТАРКИ ===
         async function loadBalances() {
             try {
                 let { data } = await db.from('users').select('*').eq('user_id', currentUserId).limit(1);
@@ -188,23 +350,24 @@
 
                 const u = data[0];
                 
-                // УСТАНОВКА АВАТАРКИ (Если есть в базе - ставим, если нет - генерим)
+                // Если аватарка есть в базе - ставим её, если нет - генерим
                 const avatarUrl = u.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${currentUserId}`;
                 document.getElementById('header-avatar').src = avatarUrl;
                 document.getElementById('profile-avatar-img').src = avatarUrl;
 
-                // ИМЯ И ЮЗЕР
                 if (u.first_name) document.getElementById('profile-name').innerText = u.first_name;
                 if (u.username) document.getElementById('profile-username').innerText = '@' + u.username;
                 else document.getElementById('profile-username').innerText = 'ID: ' + currentUserId;
 
-                // БАЛАНСЫ
                 currentGramBalance = parseFloat(u.gram_balance) || 0;
                 const crystals = parseInt(u.balance) || 0;
 
                 document.getElementById('header-balance').innerText = currentGramBalance.toFixed(2) + ' GRAM';
-                document.getElementById('profile-gram-balance').innerText = currentGramBalance.toFixed(2);
-                document.getElementById('profile-stars-balance').innerText = crystals;
+                document.getElementById('profile-gram-balance').innerHTML = `<svg viewBox="0 0 24 24" fill="#3b82f6" style="width:18px; height:18px;"><path d="M12 2L2 12l10 10 10-10L12 2zm0 3l7 7-7 7-7-7 7-7z"/></svg> ` + currentGramBalance.toFixed(2);
+                document.getElementById('profile-stars-balance').innerHTML = `<svg viewBox="0 0 24 24" fill="#facc15" style="width:18px; height:18px;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> ` + crystals;
+                
+                document.getElementById('off-balance').innerText = currentGramBalance.toFixed(2) + ' GRAM';
+                document.getElementById('buy-balance').innerText = currentGramBalance.toFixed(2) + ' GRAM';
 
             } catch (e) { console.error(e); }
         }
@@ -213,16 +376,17 @@
             const grid = document.getElementById('market-grid');
             const { data } = await db.from('market_items').select('*').eq('is_sold', false);
             if (!data || data.length === 0) {
-                grid.innerHTML = '<p style="text-align:center; width:100%;">Пусто</p>';
+                grid.innerHTML = '<p style="text-align:center; width:100%; color:#888;">Пока нет подарков на продаже</p>';
                 return;
             }
             grid.innerHTML = data.map(item => `
-                <div class="card">
+                <div class="card" onclick="openDetails('${item.name}', '${item.id}', '${item.price_gram}', '${item.image_url || ''}')">
                     <div class="card-image"><img src="${item.image_url || 'https://placehold.co/200x200/2a2a2d/ffffff?text=Gift'}"></div>
                     <div class="card-title">${item.name}</div>
                     <div class="card-id">${item.price_gram} GRAM</div>
                     <div class="card-bottom">
-                        <div class="price-btn" onclick="buyGift('${item.id}', ${item.price_gram}, ${item.seller_id})">Купить</div>
+                        <div class="price-btn">${item.price_gram} <svg viewBox="0 0 24 24"><path d="M12 2L2 12l10 10 10-10L12 2z"/></svg></div>
+                        <div class="buy-btn"><svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></div>
                     </div>
                 </div>
             `).join('');
@@ -232,7 +396,7 @@
             const grid = document.getElementById('inventory-grid');
             const { data } = await db.from('inventory').select('*').eq('user_id', currentUserId).eq('status', 'inventory');
             if (!data || data.length === 0) {
-                grid.innerHTML = '<p style="text-align:center; width:100%;">У вас нет подарков</p>';
+                grid.innerHTML = '<p style="text-align:center; width:100%; color:#888;">У вас нет подарков</p>';
                 return;
             }
             grid.innerHTML = data.map(item => `
@@ -247,26 +411,77 @@
             document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById('screen-' + tab).classList.add('active');
-            document.getElementById('nav-' + tab).classList.add('active');
-            if(tab === 'market') loadMarket();
+            if(tab === 'market') {
+                document.getElementById('nav-market').classList.add('active');
+                loadMarket();
+            }
+            if(tab === 'profile') {
+                document.getElementById('nav-profile').classList.add('active');
+                loadBalances();
+            }
             if(tab === 'inventory') loadInventory();
-            if(tab === 'profile') loadBalances();
         }
 
-        async function buyGift(giftId, price, sellerId) {
-            if (price > currentGramBalance) return tg.showAlert("Недостаточно GRAM");
+        // === МОДАЛКИ ===
+        let currentGift = { title: '', id: '', price: '', image: '' };
+
+        function openDetails(title, id, price, image) {
+            currentGift = { title, id, price, image };
+            document.getElementById('det-title').innerText = title;
+            document.getElementById('det-id').innerText = '#' + id.split('-')[0];
+            document.getElementById('det-price').innerText = price + ' GRAM';
+            document.getElementById('det-img').src = image || 'https://placehold.co/140x140/2a2a2d/ffffff?text=Gift';
+            document.getElementById('detail-modal').classList.add('active');
+        }
+
+        function openOffer() {
+            closeModal('detail-modal');
+            document.getElementById('off-title').innerText = currentGift.title;
+            document.getElementById('off-id').innerText = '#' + currentGift.id.split('-')[0];
+            setTimeout(() => document.getElementById('offer-modal').classList.add('active'), 200);
+        }
+
+        function openBuy() {
+            closeModal('detail-modal');
+            document.getElementById('buy-title').innerText = currentGift.title;
+            document.getElementById('buy-id').innerText = '#' + currentGift.id.split('-')[0];
+            document.getElementById('buy-price').innerText = currentGift.price + ' GRAM';
+            document.getElementById('buy-btn-price').innerText = currentGift.price + ' GRAM';
+            document.getElementById('buy-img').src = currentGift.image || 'https://placehold.co/60x60/2a2a2d/ffffff?text=Gift';
             
-            const res = await fetch('https://misu-bot-5uwv.onrender.com/buy_gift', {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ user_id: currentUserId, gift_id: giftId, price_gram: price, seller_id: sellerId })
-            });
-            const result = await res.json();
-            if (result.status === 'ok') {
-                tg.showAlert("Успешно куплено!");
-                init(); 
+            document.getElementById('buy-reward').innerText = Math.floor(parseFloat(currentGift.price) * 100) + ' ✦';
+
+            if (parseFloat(currentGift.price) > currentGramBalance) {
+                document.getElementById('buy-error').style.display = 'block';
             } else {
-                tg.showAlert("Ошибка: " + result.message);
+                document.getElementById('buy-error').style.display = 'none';
             }
+            setTimeout(() => document.getElementById('buy-modal').classList.add('active'), 200);
+        }
+
+        async function confirmBuy() {
+            if (parseFloat(currentGift.price) > currentGramBalance) return tg.showAlert("Недостаточно GRAM");
+            const btn = document.querySelector('#buy-modal .btn-full');
+            const oldText = btn.innerHTML;
+            btn.innerHTML = "Загрузка...";
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('https://misu-bot-5uwv.onrender.com/buy_gift', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: currentUserId, gift_id: currentGift.id, price_gram: parseFloat(currentGift.price), seller_id: 0 })
+                });
+                const result = await res.json();
+                if (result.status === 'ok') {
+                    tg.showAlert(`Успешно куплено! Начислено ${result.crystals} ✦`);
+                    closeModal('buy-modal');
+                    loadBalances(); 
+                    loadMarket(); 
+                } else {
+                    tg.showAlert("Ошибка: " + result.message);
+                }
+            } catch (e) { tg.showAlert("Ошибка сети"); }
+            finally { btn.innerHTML = oldText; btn.disabled = false; }
         }
 
         function openInventoryAction(id, name) {
@@ -288,13 +503,10 @@
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: currentUserId, gift_name: selectedInventoryName })
                 });
-                
                 if (res.ok) {
                     tg.showAlert("Заявка отправлена Админу!");
                     closeModal('inv-action-modal');
-                } else {
-                    tg.showAlert("Ошибка сервера.");
-                }
+                } else { tg.showAlert("Ошибка сервера."); }
             } catch(e) { tg.showAlert("Ошибка сети."); }
         }
 
@@ -321,4 +533,4 @@
         init();
     </script>
 </body>
-                                         </html>
+    </html>
