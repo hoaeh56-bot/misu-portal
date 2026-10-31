@@ -15,31 +15,30 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 80px; overflow-x: hidden; font-size: 16px; }
         
+        /* ДЕБАГ ПЛАШКА */
+        .debug-bar { background: #ef4444; color: white; text-align: center; padding: 5px; font-size: 12px; font-weight: bold; position: relative; z-index: 9999; }
+
         .screen { display: none; }
         .screen.active { display: block; animation: fadeIn 0.2s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* HEADER */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; }
         .avatar { width: 45px; height: 45px; border-radius: 50%; background: #333; overflow: hidden; border: 2px solid var(--border); }
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
         .balance-pill { background: var(--card); padding: 8px 16px; border-radius: 20px; display: flex; align-items: center; gap: 8px; font-size: 1rem; font-weight: 700; border: 1px solid var(--border); }
         .balance-pill svg { width: 18px; height: 18px; }
 
-        /* CATEGORIES */
         .categories { display: flex; padding: 0 20px; margin-bottom: 20px; }
         .cat-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
         .cat-icon { width: 60px; height: 60px; background: var(--card); border-radius: 16px; display: flex; justify-content: center; align-items: center; border: 1px solid var(--border); }
         .cat-icon svg { width: 28px; height: 28px; fill: var(--text); }
         .cat-item span { font-size: 0.85rem; font-weight: 600; }
 
-        /* SEARCH */
         .search-row { display: flex; gap: 12px; padding: 0 20px; margin-bottom: 20px; }
         .search-wrapper { flex: 1; background: var(--card); border-radius: 14px; display: flex; align-items: center; padding: 0 16px; border: 1px solid var(--border); }
         .search-wrapper svg { width: 20px; height: 20px; fill: var(--text-secondary); margin-right: 10px; }
         .search-wrapper input { background: transparent; border: none; color: var(--text); width: 100%; padding: 16px 0; font-size: 1rem; outline: none; }
 
-        /* GRID & CARDS */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; }
         .card { background: var(--card); border-radius: 18px; padding: 12px; border: 1px solid var(--border); position: relative; }
         .card-image { width: 100%; aspect-ratio: 1; background: #2a2a2d; border-radius: 14px; margin-bottom: 12px; overflow: hidden; }
@@ -53,13 +52,11 @@
         .buy-btn { width: 40px; height: 40px; background: #2c2c2e; border-radius: 12px; display: flex; justify-content: center; align-items: center; }
         .buy-btn svg { width: 20px; height: 20px; fill: var(--text); }
 
-        /* BOTTOM NAV */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 15, 17, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--border); z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 0.8rem; font-weight: 600; width: 50%; cursor: pointer; }
         .nav-item.active { color: var(--accent); }
         .nav-item svg { width: 26px; height: 26px; fill: currentColor; }
 
-        /* PROFILE */
         .profile-header { display: flex; flex-direction: column; align-items: center; padding: 30px 20px; }
         .profile-avatar { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--border); margin-bottom: 15px; overflow: hidden; }
         .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
@@ -73,7 +70,6 @@
         
         .btn-inventory { width: 100%; max-width: 400px; background: var(--accent); color: white; padding: 18px; border-radius: 16px; font-size: 1.1rem; font-weight: 800; border: none; display: flex; justify-content: center; align-items: center; gap: 10px; cursor: pointer; }
 
-        /* MODALS */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: flex-end; z-index: 1000; }
         .overlay.active { display: flex; }
         .bottom-sheet { background: #1c1c1e; width: 100%; max-width: 500px; border-radius: 24px 24px 0 0; padding: 20px; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.1, 0.8, 0.2, 1); position: relative; }
@@ -125,6 +121,9 @@
     </style>
 </head>
 <body>
+
+    <!-- ДЕБАГ ПЛАШКА -->
+    <div class="debug-bar" id="debug-bar">ID: Загрузка...</div>
 
     <!-- ЭКРАН: МАРКЕТ -->
     <div id="screen-market" class="screen active">
@@ -318,23 +317,26 @@
         let currentUserId = null;
         let currentGramBalance = 0;
 
-        // === ФИКС СЧИТЫВАНИЯ ПРОФИЛЯ (100% РАБОТАЕТ) ===
+        // === ФИКС СЧИТЫВАНИЯ ПРОФИЛЯ ===
         function loadUserProfile() {
             let user = null;
-            // 1. Пытаемся взять из WebApp
+            let debugInfo = "Пусто";
+
             if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
                 user = tg.initDataUnsafe.user;
-            } 
-            // 2. Пытаемся распарсить сырые данные (для Missgram)
-            else if (tg.initData) {
+                debugInfo = "initDataUnsafe OK";
+            } else if (tg.initData) {
                 try {
                     const params = new URLSearchParams(tg.initData);
                     const userStr = params.get('user');
-                    if (userStr) user = JSON.parse(userStr);
-                } catch(e) { console.error("Parse error", e); }
+                    if (userStr) {
+                        user = JSON.parse(userStr);
+                        debugInfo = "Parsed initData OK";
+                    }
+                } catch(e) { debugInfo = "Parse Error"; }
             }
 
-            // 3. Если нашли юзера - ставим данные
+            // Если нашли юзера
             if (user) {
                 currentUserId = user.id;
                 const avatarUrl = user.photo_url || 'https://i.pravatar.cc/100?img=11';
@@ -346,13 +348,24 @@
                 document.getElementById('profile-name').innerText = fullName.trim() || 'Пользователь';
                 document.getElementById('profile-username').innerText = user.username ? '@' + user.username : '@no_username';
             } 
-            // 4. Если вообще нет данных - берем ID из URL
+            // Если нет, берем из URL
             else {
                 const urlParams = new URLSearchParams(window.location.search);
-                currentUserId = parseInt(urlParams.get('user_id')) || 0;
-                document.getElementById('profile-name').innerText = 'Пользователь';
-                document.getElementById('profile-username').innerText = currentUserId ? 'ID: ' + currentUserId : 'Не авторизован';
+                const urlId = urlParams.get('user_id');
+                if (urlId) {
+                    currentUserId = parseInt(urlId);
+                    debugInfo += " | URL ID OK";
+                    document.getElementById('profile-name').innerText = 'Пользователь';
+                    document.getElementById('profile-username').innerText = 'ID: ' + currentUserId;
+                } else {
+                    document.getElementById('profile-name').innerText = 'Не авторизован';
+                    document.getElementById('profile-username').innerText = 'Нет данных';
+                    debugInfo += " | ALL FAILED";
+                }
             }
+
+            // Выводим отладку на экран
+            document.getElementById('debug-bar').innerText = `Статус: ${debugInfo} | ID: ${currentUserId || 0}`;
 
             // Загружаем баланс
             loadBalances();
@@ -365,7 +378,6 @@
                 let { data } = await db.from('users').select('gram_balance, balance').eq('user_id', currentUserId).limit(1);
                 
                 if (!data || data.length === 0) {
-                    // Создаем юзера, если нет
                     const walletAddress = 'T' + Math.random().toString(36).substring(2, 15).toUpperCase();
                     await db.from('users').insert({ user_id: currentUserId, wallet_address: walletAddress });
                     data = [{ gram_balance: 0, balance: 0 }];
@@ -374,14 +386,12 @@
                 currentGramBalance = parseFloat(data[0].gram_balance) || 0;
                 const crystals = parseInt(data[0].balance) || 0;
 
-                // Обновляем UI
                 document.getElementById('header-balance').innerText = currentGramBalance.toFixed(2) + ' GRAM';
                 
                 document.getElementById('profile-gram-balance').innerHTML = `<svg viewBox="0 0 24 24" fill="#3b82f6" style="width:18px; height:18px;"><path d="M12 2L2 12l10 10 10-10L12 2zm0 3l7 7-7 7-7-7 7-7z"/></svg> ` + currentGramBalance.toFixed(2);
                 
                 document.getElementById('profile-stars-balance').innerHTML = `<svg viewBox="0 0 24 24" fill="#facc15" style="width:18px; height:18px;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> ` + crystals;
 
-                // Для модалок
                 document.getElementById('off-balance').innerText = currentGramBalance.toFixed(2) + ' GRAM';
                 document.getElementById('buy-balance').innerText = currentGramBalance.toFixed(2) + ' GRAM';
 
@@ -390,7 +400,6 @@
             }
         }
 
-        // === НАВИГАЦИЯ ===
         function switchTab(tabId) {
             document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
             document.getElementById('screen-' + tabId).classList.add('active');
@@ -405,7 +414,6 @@
             }
         }
 
-        // === МОДАЛКИ ===
         let currentGift = { title: '', id: '', price: '' };
 
         function openDetails(title, id, price) {
@@ -430,7 +438,6 @@
             document.getElementById('buy-price').innerText = currentGift.price + ' GRAM';
             document.getElementById('buy-btn-price').innerText = currentGift.price + ' GRAM';
             
-            // Считаем кристаллы (1 GRAM = 100 кристаллов)
             document.getElementById('buy-reward').innerText = Math.floor(parseFloat(currentGift.price) * 100) + ' ✦';
 
             if (parseFloat(currentGift.price) > currentGramBalance) {
@@ -446,9 +453,8 @@
             document.getElementById(modalId).classList.remove('active');
         }
 
-        // === ПОКУПКА (СПИСАНИЕ В БАЗЕ ЧЕРЕЗ БОТА) ===
         async function confirmBuy() {
-            if (!currentUserId) return tg.showAlert("Ошибка: не найден ID");
+            if (!currentUserId) return tg.showAlert("Ошибка: не найден ID. Перезайди через бота.");
             if (parseFloat(currentGift.price) > currentGramBalance) return tg.showAlert("Недостаточно GRAM");
 
             const btn = document.querySelector('#buy-modal .btn-full');
@@ -457,7 +463,6 @@
             btn.disabled = true;
 
             try {
-                // Отправляем запрос на Render, чтобы он списал бабки
                 const response = await fetch('https://misu-bot-5uwv.onrender.com/buy_gift', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -474,7 +479,7 @@
                 if (result.status === 'ok') {
                     tg.showAlert(`Успешно куплено! Начислено ${result.crystals} ✦`);
                     closeModal('buy-modal');
-                    loadBalances(); // Обновляем баланс на экране
+                    loadBalances(); 
                 } else {
                     tg.showAlert("Ошибка: " + result.message);
                 }
@@ -486,7 +491,6 @@
             }
         }
 
-        // === СТАРТ ===
         loadUserProfile();
     </script>
 </body>
