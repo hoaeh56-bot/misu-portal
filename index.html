@@ -11,69 +11,86 @@
         :root { --bg: #0f0f11; --card: #1c1c1e; --text: #ffffff; --text-secondary: #8e8e93; --accent: #0a84ff; --border: #2c2c2e; --star: #facc15; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 80px; overflow-x: hidden; font-size: 16px; }
+        
         .screen { display: none; }
         .screen.active { display: block; animation: fadeIn 0.2s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; }
         .avatar { width: 45px; height: 45px; border-radius: 50%; background: #333; overflow: hidden; border: 2px solid var(--border); }
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
         .balance-pill { background: var(--card); padding: 8px 16px; border-radius: 20px; display: flex; align-items: center; gap: 8px; font-size: 1rem; font-weight: 700; border: 1px solid var(--border); }
         .balance-pill svg { width: 18px; height: 18px; }
+
         .categories { display: flex; padding: 0 20px; margin-bottom: 20px; }
         .cat-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
         .cat-icon { width: 60px; height: 60px; background: var(--card); border-radius: 16px; display: flex; justify-content: center; align-items: center; border: 1px solid var(--border); }
         .cat-icon svg { width: 28px; height: 28px; fill: var(--text); }
         .cat-item span { font-size: 0.85rem; font-weight: 600; }
+
         .search-row { display: flex; gap: 12px; padding: 0 20px; margin-bottom: 20px; }
         .search-wrapper { flex: 1; background: var(--card); border-radius: 14px; display: flex; align-items: center; padding: 0 16px; border: 1px solid var(--border); }
         .search-wrapper svg { width: 20px; height: 20px; fill: var(--text-secondary); margin-right: 10px; }
         .search-wrapper input { background: transparent; border: none; color: var(--text); width: 100%; padding: 16px 0; font-size: 1rem; outline: none; }
+
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; }
         .card { background: var(--card); border-radius: 18px; padding: 12px; border: 1px solid var(--border); position: relative; cursor: pointer; }
         .card-image { width: 100%; aspect-ratio: 1; background: #2a2a2d; border-radius: 14px; margin-bottom: 12px; overflow: hidden; }
         .card-image img { width: 100%; height: 100%; object-fit: cover; }
         .card-title { font-size: 1rem; font-weight: 800; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-id { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px; }
+        
         .card-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
         .price-btn { flex: 1; background: var(--accent); color: white; padding: 10px; border-radius: 12px; font-size: 0.95rem; font-weight: 700; display: flex; justify-content: center; align-items: center; gap: 5px; }
         .price-btn svg { width: 14px; height: 14px; fill: white; }
         .buy-btn { width: 40px; height: 40px; background: #2c2c2e; border-radius: 12px; display: flex; justify-content: center; align-items: center; }
         .buy-btn svg { width: 20px; height: 20px; fill: var(--text); }
+
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 15, 17, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--border); z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 0.8rem; font-weight: 600; width: 50%; cursor: pointer; }
         .nav-item.active { color: var(--accent); }
         .nav-item svg { width: 26px; height: 26px; fill: currentColor; }
+
         .profile-header { display: flex; flex-direction: column; align-items: center; padding: 30px 20px; }
         .profile-avatar { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--border); margin-bottom: 15px; overflow: hidden; }
         .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
         .profile-name { font-size: 1.5rem; font-weight: 800; margin-bottom: 4px; }
         .profile-username { color: var(--text-secondary); font-size: 1rem; margin-bottom: 25px; }
+        
         .balances-row { display: flex; gap: 12px; width: 100%; max-width: 400px; margin-bottom: 25px; }
         .balance-card { flex: 1; background: var(--card); padding: 20px; border-radius: 18px; border: 1px solid var(--border); text-align: center; }
         .balance-card-title { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px; }
         .balance-card-value { font-size: 1.3rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        
         .btn-inventory { width: 100%; max-width: 400px; background: var(--accent); color: white; padding: 18px; border-radius: 16px; font-size: 1.1rem; font-weight: 800; border: none; display: flex; justify-content: center; align-items: center; gap: 10px; cursor: pointer; }
+
         .inventory-header { display: flex; align-items: center; padding: 15px; gap: 10px; }
         .back-btn { background: var(--card); border: 1px solid var(--border); color: white; width: 36px; height: 36px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; cursor: pointer; }
+
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: flex-end; z-index: 1000; }
         .overlay.active { display: flex; }
         .bottom-sheet { background: #1c1c1e; width: 100%; max-width: 500px; border-radius: 24px 24px 0 0; padding: 20px; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.1, 0.8, 0.2, 1); position: relative; }
         .overlay.active .bottom-sheet { transform: translateY(0); }
         .drag-handle { width: 40px; height: 5px; background: #444; border-radius: 3px; margin: 0 auto 20px auto; }
+
         .detail-img { width: 140px; height: 140px; border-radius: 24px; margin: 0 auto 15px auto; display: block; background: #2a2a2d; object-fit: cover; }
         .detail-title { font-size: 1.5rem; font-weight: 800; text-align: center; margin-bottom: 4px; }
         .detail-id { font-size: 1rem; color: var(--text-secondary); text-align: center; margin-bottom: 20px; }
+        
         .attr-box { background: #121214; border-radius: 16px; padding: 15px; margin-bottom: 20px; border: 1px solid var(--border); }
         .attr-row { display: flex; justify-content: space-between; align-items: center; font-size: 1rem; }
         .attr-label { color: var(--text-secondary); }
         .attr-value { font-weight: 700; color: var(--accent); }
+
         .action-buttons { display: flex; gap: 12px; }
         .btn-offer { flex: 1; background: #2c2c2e; color: var(--text); padding: 15px; border-radius: 14px; font-size: 1rem; font-weight: 700; text-align: center; border: none; display: flex; flex-direction: column; justify-content: center; cursor: pointer; }
         .btn-offer span { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
         .btn-buy-main { flex: 1.2; background: var(--accent); color: white; padding: 15px; border-radius: 14px; font-size: 1.05rem; font-weight: 800; text-align: center; border: none; display: flex; flex-direction: column; justify-content: center; line-height: 1.3; cursor: pointer; }
         .btn-buy-main span { font-size: 0.85rem; font-weight: 600; opacity: 0.9; margin-top: 4px; }
+
         .sheet-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
         .sheet-subtitle { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px; }
+        
         .item-info-box { display: flex; gap: 15px; margin-bottom: 20px; align-items: center; background: #121214; padding: 15px; border-radius: 16px; border: 1px solid var(--border); }
         .item-info-img { width: 60px; height: 60px; border-radius: 12px; background: #2a2a2d; object-fit: cover; }
         .item-info-text { flex: 1; }
@@ -94,7 +111,8 @@
 
     <div id="screen-market" class="screen active">
         <div class="header">
-            <div class="avatar"><img id="header-avatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=default"></div>
+            <!-- УБРАЛ РОБОТА, ПОСТАВИЛ НЕЙТРАЛЬНУЮ АВУ -->
+            <div class="avatar"><img id="header-avatar" src="https://ui-avatars.com/api/?name=User&background=2a2a2d&color=fff"></div>
             <div class="balance-pill">
                 <svg viewBox="0 0 24 24" fill="#3b82f6"><path d="M12 2L2 12l10 10 10-10L12 2zm0 3l7 7-7 7-7-7 7-7z"/></svg>
                 <span id="header-balance">0.00 GRAM</span>
@@ -117,7 +135,7 @@
 
     <div id="screen-profile" class="screen">
         <div class="profile-header">
-            <div class="profile-avatar"><img id="profile-avatar-img" src="https://api.dicebear.com/7.x/bottts/svg?seed=default"></div>
+            <div class="profile-avatar"><img id="profile-avatar-img" src="https://ui-avatars.com/api/?name=User&background=2a2a2d&color=fff"></div>
             <div class="profile-name" id="profile-name">Загрузка...</div>
             <div class="profile-username" id="profile-username">@...</div>
             <div class="balances-row">
@@ -160,7 +178,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛКИ -->
     <div class="overlay" id="detail-modal" onclick="closeModal('detail-modal')">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="drag-handle"></div>
@@ -254,7 +271,9 @@
                     data = [{ gram_balance: 0, balance: 0, username: '', first_name: 'Пользователь', avatar_url: '' }];
                 }
                 const u = data[0];
-                const avatarUrl = u.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${currentUserId}`;
+                
+                // Если аватарки нет - ставим нейтральную
+                const avatarUrl = u.avatar_url || `https://ui-avatars.com/api/?name=${u.first_name || 'User'}&background=2a2a2d&color=fff`;
                 document.getElementById('header-avatar').src = avatarUrl;
                 document.getElementById('profile-avatar-img').src = avatarUrl;
 
