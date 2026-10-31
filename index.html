@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Portals Market</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -18,7 +19,6 @@
         .screen.active { display: block; animation: fadeIn 0.2s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- HEADER & SEARCH --- */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; }
         .avatar { width: 34px; height: 34px; border-radius: 50%; background: #333; overflow: hidden; border: 1.5px solid var(--border); }
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
@@ -38,7 +38,6 @@
         .filters-row { display: flex; gap: 8px; padding: 0 15px; margin-bottom: 15px; }
         .filter-pill { background: var(--card); padding: 7px 12px; border-radius: 10px; font-size: 0.75rem; font-weight: 600; border: 1px solid var(--border); }
 
-        /* --- GRID & CARDS --- */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 15px; }
         .card { background: var(--card); border-radius: 16px; padding: 8px; border: 1px solid var(--border); position: relative; }
         .card-image { width: 100%; aspect-ratio: 1; background: #2a2a2d; border-radius: 12px; margin-bottom: 8px; overflow: hidden; }
@@ -51,13 +50,11 @@
         .buy-btn { width: 28px; height: 28px; background: #2c2c2e; border-radius: 8px; display: flex; justify-content: center; align-items: center; }
         .buy-btn svg { width: 14px; height: 14px; fill: var(--text); }
 
-        /* --- BOTTOM NAV --- */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 15, 17, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid var(--border); z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-secondary); font-size: 0.65rem; font-weight: 600; width: 50%; cursor: pointer; }
         .nav-item.active { color: var(--accent); }
         .nav-item svg { width: 20px; height: 20px; fill: currentColor; }
 
-        /* --- ПРОФИЛЬ --- */
         .profile-header { display: flex; flex-direction: column; align-items: center; padding: 20px 15px; }
         .profile-avatar { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--border); margin-bottom: 10px; overflow: hidden; }
         .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
@@ -71,18 +68,15 @@
         
         .btn-inventory { width: 100%; max-width: 300px; background: var(--accent); color: white; padding: 12px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; border: none; display: flex; justify-content: center; align-items: center; gap: 6px; }
 
-        /* --- ИНВЕНТАРЬ --- */
         .inventory-header { display: flex; align-items: center; padding: 15px; gap: 10px; }
         .back-btn { background: var(--card); border: 1px solid var(--border); color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 1rem; cursor: pointer; }
 
-        /* --- МОДАЛЬНЫЕ ОКНА (УМЕНЬШЕННЫЕ) --- */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: flex-end; z-index: 1000; }
         .overlay.active { display: flex; }
         .bottom-sheet { background: #1c1c1e; width: 100%; max-width: 450px; border-radius: 20px 20px 0 0; padding: 12px 15px 20px 15px; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.1, 0.8, 0.2, 1); position: relative; }
         .overlay.active .bottom-sheet { transform: translateY(0); }
         .drag-handle { width: 32px; height: 4px; background: #444; border-radius: 2px; margin: 0 auto 12px auto; }
 
-        /* Окно деталей */
         .detail-img { width: 100px; height: 100px; border-radius: 20px; margin: 0 auto 12px auto; display: block; background: #2a2a2d; }
         .detail-title { font-size: 1.2rem; font-weight: 800; text-align: center; margin-bottom: 2px; }
         .detail-id { font-size: 0.8rem; color: var(--text-secondary); text-align: center; margin-bottom: 15px; }
@@ -98,7 +92,6 @@
         .btn-buy-main { flex: 1.2; background: var(--accent); color: white; padding: 10px; border-radius: 10px; font-size: 0.85rem; font-weight: 700; text-align: center; border: none; display: flex; flex-direction: column; justify-content: center; line-height: 1.2; }
         .btn-buy-main span { font-size: 0.65rem; font-weight: 500; opacity: 0.9; }
 
-        /* Окно покупки и оффера */
         .sheet-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 4px; }
         .sheet-subtitle { color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 12px; }
         
@@ -116,7 +109,7 @@
         
         .error-text { color: #ef4444; font-size: 0.75rem; text-align: center; margin: 8px 0; display: none; }
         
-        .btn-full { width: 100%; background: var(--accent); color: white; padding: 12px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; border: none; margin-top: 8px; display: flex; flex-direction: column; align-items: center; line-height: 1.2; }
+        .btn-full { width: 100%; background: var(--accent); color: white; padding: 12px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; border: none; margin-top: 8px; display: flex; flex-direction: column; align-items: center; line-height: 1.2; cursor: pointer; }
         .btn-full span { font-size: 0.7rem; font-weight: 500; opacity: 0.9; }
         
         .toggle-row { display: flex; background: #121214; border-radius: 10px; padding: 3px; margin-bottom: 10px; border: 1px solid var(--border); }
@@ -136,7 +129,7 @@
             <div class="avatar"><img id="header-avatar" src="https://i.pravatar.cc/100?img=11"></div>
             <div class="balance-pill">
                 <svg viewBox="0 0 24 24" fill="#3b82f6"><path d="M12 2L2 12l10 10 10-10L12 2zm0 3l7 7-7 7-7-7 7-7z"/></svg>
-                <span id="header-balance">0.05 GRAM</span>
+                <span id="header-balance">0.00 GRAM</span>
             </div>
         </div>
 
@@ -160,7 +153,6 @@
         </div>
 
         <div class="grid">
-            <!-- Карточка -->
             <div class="card" onclick="openDetails('Clover Pin', '6259', '7.00')">
                 <div class="card-image"><img src="https://placehold.co/200x200/2a2a2d/ffffff?text=Clover" alt="Gift"></div>
                 <div class="card-title">Clover Pin</div>
@@ -170,7 +162,6 @@
                     <div class="buy-btn"><svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></div>
                 </div>
             </div>
-            <!-- Карточка -->
             <div class="card" onclick="openDetails('Snoop Dogg', '388479', '16.99')">
                 <div class="card-image"><img src="https://placehold.co/200x200/2a2a2d/ffffff?text=Dogg" alt="Gift"></div>
                 <div class="card-title">Snoop Dogg</div>
@@ -186,31 +177,27 @@
     <!-- ЭКРАН: ПРОФИЛЬ -->
     <div id="screen-profile" class="screen">
         <div class="profile-header">
-            <div class="profile-avatar">
-                <img id="profile-avatar-img" src="https://i.pravatar.cc/100?img=11">
-            </div>
+            <div class="profile-avatar"><img id="profile-avatar-img" src="https://i.pravatar.cc/100?img=11"></div>
             <div class="profile-name" id="profile-name">Пользователь</div>
             <div class="profile-username" id="profile-username">@username</div>
 
-            <!-- Балансы -->
             <div class="balances-row">
                 <div class="balance-card">
                     <div class="balance-card-title">Баланс GRAM</div>
                     <div class="balance-card-value" id="profile-gram-balance" style="color: #3b82f6;">
                         <svg viewBox="0 0 24 24" fill="#3b82f6" style="width:14px; height:14px;"><path d="M12 2L2 12l10 10 10-10L12 2zm0 3l7 7-7 7-7-7 7-7z"/></svg>
-                        0.05
+                        0.00
                     </div>
                 </div>
                 <div class="balance-card">
-                    <div class="balance-card-title">Звезды</div>
+                    <div class="balance-card-title">Кристаллы</div>
                     <div class="balance-card-value" id="profile-stars-balance" style="color: #facc15;">
                         <svg viewBox="0 0 24 24" fill="#facc15" style="width:14px; height:14px;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                        848
+                        0
                     </div>
                 </div>
             </div>
 
-            <!-- Кнопка Инвентарь -->
             <button class="btn-inventory" onclick="switchTab('inventory')">
                 <svg viewBox="0 0 24 24" fill="white" style="width: 16px; height: 16px;"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg>
                 Мой Инвентарь
@@ -294,7 +281,7 @@
                 <span>GRAM</span>
             </div>
 
-            <div class="info-line"><span>Доступный баланс</span><span>0.05 GRAM</span></div>
+            <div class="info-line"><span>Доступный баланс</span><span id="off-balance">0.00 GRAM</span></div>
             <div class="info-line" style="margin-bottom: 12px;"><span>Вознаграждение</span><span style="color: #facc15;">0 ✦</span></div>
 
             <button class="btn-full" onclick="closeModal('offer-modal')">Отправить оффер</button>
@@ -320,12 +307,12 @@
                 </div>
             </div>
 
-            <div class="info-line"><span>Доступный баланс</span><span>0.05 GRAM</span></div>
-            <div class="info-line"><span>Вознаграждение за покупку</span><span style="color: #facc15;">848 ✦</span></div>
+            <div class="info-line"><span>Доступный баланс</span><span id="buy-balance">0.00 GRAM</span></div>
+            <div class="info-line"><span>Вознаграждение за покупку</span><span style="color: #facc15;" id="buy-reward">0 ✦</span></div>
 
             <div class="error-text" id="buy-error">Недостаточный баланс</div>
 
-            <button class="btn-full" onclick="closeModal('buy-modal')">
+            <button class="btn-full" onclick="confirmBuy()">
                 Купить подарок
                 <span id="buy-btn-price">0.00 GRAM</span>
             </button>
@@ -333,40 +320,91 @@
     </div>
 
     <script>
+        // === ПОДКЛЮЧЕНИЕ SUPABASE ===
+        const SUPABASE_URL = "https://ptcofqwsvyytcnoerazu.supabase.co";
+        const SUPABASE_ANON_KEY = "sb_publishable_CL2wAd6YW9tj5fIq4r9b4A_iVeZtnBx";
+        const { createClient } = supabase;
+        const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         const tg = window.Telegram.WebApp;
         tg.ready();
         tg.expand();
 
-        // === СЧИТЫВАНИЕ ПРОФИЛЯ ===
+        let currentUserId = null;
+        let currentGramBalance = 0;
+        let currentCrystals = 0;
+
+        // === 1. СЧИТЫВАНИЕ ПРОФИЛЯ (ФИКС) ===
         function loadUserProfile() {
+            let user = null;
             if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                const user = tg.initDataUnsafe.user;
+                user = tg.initDataUnsafe.user;
+            } else if (tg.initData) {
+                try {
+                    const urlParams = new URLSearchParams(tg.initData);
+                    const userStr = urlParams.get('user');
+                    if (userStr) user = JSON.parse(userStr);
+                } catch(e) { console.error(e); }
+            }
+
+            if (user) {
+                currentUserId = user.id;
+                const avatarUrl = user.photo_url || 'https://i.pravatar.cc/100?img=11';
                 
-                // Аватарка (ставим везде, где нужно)
-                if (user.photo_url) {
-                    const headerAvatar = document.getElementById('header-avatar');
-                    const profileAvatar = document.getElementById('profile-avatar-img');
-                    if (headerAvatar) headerAvatar.src = user.photo_url;
-                    if (profileAvatar) profileAvatar.src = user.photo_url;
+                document.getElementById('header-avatar').src = avatarUrl;
+                document.getElementById('profile-avatar-img').src = avatarUrl;
+                
+                let fullName = user.first_name || '';
+                if (user.last_name) fullName += ' ' + user.last_name;
+                document.getElementById('profile-name').innerText = fullName.trim() || 'Пользователь';
+                document.getElementById('profile-username').innerText = user.username ? '@' + user.username : '@no_username';
+            } else {
+                const urlParams = new URLSearchParams(window.location.search);
+                currentUserId = parseInt(urlParams.get('user_id')) || 0;
+                document.getElementById('profile-name').innerText = 'Пользователь';
+                document.getElementById('profile-username').innerText = currentUserId ? 'ID: ' + currentUserId : 'Не авторизован';
+            }
+            
+            loadBalances();
+        }
+
+        // === 2. ЗАГРУЗКА БАЛАНСА ИЗ БАЗЫ ===
+        async function loadBalances() {
+            if (!currentUserId) return;
+            try {
+                // Ищем юзера, если нет - создаем
+                let { data, error } = await db.from('users').select('gram_balance, balance').eq('user_id', currentUserId).maybeSingle();
+                
+                if (!data) {
+                    const walletAddress = 'T' + Math.random().toString(36).substring(2, 15).toUpperCase();
+                    await db.from('users').insert({ user_id: currentUserId, wallet_address: walletAddress });
+                    data = { gram_balance: 0, balance: 0 };
                 }
+
+                currentGramBalance = parseFloat(data.gram_balance) || 0;
+                currentCrystals = parseInt(data.balance) || 0;
+
+                // Обновляем UI
+                document.getElementById('header-balance').innerText = currentGramBalance.toFixed(2) + ' GRAM';
                 
-                // Имя и Юзернейм
-                const nameEl = document.getElementById('profile-name');
-                const usernameEl = document.getElementById('profile-username');
+                const profileGram = document.getElementById('profile-gram-balance');
+                if (profileGram) profileGram.innerHTML = `<svg viewBox="0 0 24 24" fill="#3b82f6" style="width:14px; height:14px;"><path d="M12 2L2 12l10 10 10-10L12 2zm0 3l7 7-7 7-7-7 7-7z"/></svg> ` + currentGramBalance.toFixed(2);
                 
-                if (nameEl) {
-                    let fullName = user.first_name || '';
-                    if (user.last_name) fullName += ' ' + user.last_name;
-                    nameEl.innerText = fullName || 'Пользователь';
-                }
-                
-                if (usernameEl) {
-                    usernameEl.innerText = user.username ? '@' + user.username : '@no_username';
-                }
+                const profileStars = document.getElementById('profile-stars-balance');
+                if (profileStars) profileStars.innerHTML = `<svg viewBox="0 0 24 24" fill="#facc15" style="width:14px; height:14px;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> ` + currentCrystals;
+
+                // Обновляем баланс в модалках
+                const offBal = document.getElementById('off-balance');
+                const buyBal = document.getElementById('buy-balance');
+                if (offBal) offBal.innerText = currentGramBalance.toFixed(2) + ' GRAM';
+                if (buyBal) buyBal.innerText = currentGramBalance.toFixed(2) + ' GRAM';
+
+            } catch (e) {
+                console.error("Ошибка баланса:", e);
             }
         }
 
-        // === НАВИГАЦИЯ ===
+        // === 3. НАВИГАЦИЯ ===
         function switchTab(tabId) {
             document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
             document.getElementById('screen-' + tabId).classList.add('active');
@@ -377,10 +415,11 @@
             } else if (tabId === 'profile') {
                 document.getElementById('nav-profile').classList.add('active');
                 document.getElementById('nav-market').classList.remove('active');
+                loadBalances(); // Обновляем при входе
             }
         }
 
-        // === ЛОГИКА ОКОН ===
+        // === 4. МОДАЛКИ ===
         let currentGift = { title: '', id: '', price: '' };
 
         function openDetails(title, id, price) {
@@ -405,7 +444,10 @@
             document.getElementById('buy-price').innerText = currentGift.price + ' GRAM';
             document.getElementById('buy-btn-price').innerText = currentGift.price + ' GRAM';
             
-            if (parseFloat(currentGift.price) > 0.05) {
+            // Считаем кристаллы (1 GRAM = 100 кристаллов)
+            document.getElementById('buy-reward').innerText = Math.floor(parseFloat(currentGift.price) * 100) + ' ✦';
+
+            if (parseFloat(currentGift.price) > currentGramBalance) {
                 document.getElementById('buy-error').style.display = 'block';
             } else {
                 document.getElementById('buy-error').style.display = 'none';
@@ -418,8 +460,47 @@
             document.getElementById(modalId).classList.remove('active');
         }
 
+        // === 5. ПОКУПКА (СВЯЗЬ С БОТОМ) ===
+        async function confirmBuy() {
+            if (!currentUserId) return tg.showAlert("Ошибка: не найден ID");
+            if (parseFloat(currentGift.price) > currentGramBalance) return tg.showAlert("Недостаточно GRAM");
+
+            const btn = document.querySelector('#buy-modal .btn-full');
+            const oldText = btn.innerHTML;
+            btn.innerHTML = "Загрузка...";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('https://misu-bot-5uwv.onrender.com/buy_gift', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: currentUserId,
+                        gift_name: currentGift.title,
+                        gift_id: currentGift.id,
+                        price_gram: parseFloat(currentGift.price)
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'ok') {
+                    tg.showAlert(`Успешно куплено! Начислено ${result.crystals} ✦`);
+                    closeModal('buy-modal');
+                    loadBalances(); // Обновляем баланс
+                } else {
+                    tg.showAlert("Ошибка: " + result.message);
+                }
+            } catch (e) {
+                tg.showAlert("Ошибка сети: " + e.message);
+            } finally {
+                btn.innerHTML = oldText;
+                btn.disabled = false;
+            }
+        }
+
         // === СТАРТ ===
         loadUserProfile();
     </script>
 </body>
-                        </html>
+</html>
