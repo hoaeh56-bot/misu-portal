@@ -17,12 +17,13 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #000000;
+            background-color: #050505;
             color: white;
             display: flex;
             flex-direction: column;
             height: 100vh;
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         /* --- ХЕДЕР --- */
@@ -30,411 +31,528 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 10px 15px;
             z-index: 10;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-count {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #aaa;
+            font-size: 14px;
         }
 
         .balance-box {
             display: flex;
             align-items: center;
-            background: transparent;
-            border: 1px solid #ffd700;
-            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 5px 12px;
             border-radius: 20px;
             gap: 6px;
         }
-
-        /* 3D Иконка Звезды (SVG) */
-        .icon-star {
-            width: 18px;
-            height: 18px;
-            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+        
+        .balance-box .star-icon {
+            width: 16px;
+            height: 16px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ffd700"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>') no-repeat center;
+            background-size: contain;
         }
 
         .balance-box span.amount {
-            font-weight: 700;
+            font-weight: 600;
             font-size: 14px;
-            color: #ffd700;
+            color: #fff;
         }
 
         .deposit-btn {
             background: #ffd700;
             color: #000;
             border: none;
-            padding: 8px 16px;
+            padding: 6px 12px;
             border-radius: 20px;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 13px;
             cursor: pointer;
+            margin-right: 10px;
         }
 
-        /* --- ЗОНА КОЛЕСА --- */
-        .wheel-zone {
-            flex-grow: 1;
+        .profile-pic {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #333;
+            background-image: url('https://i.pravatar.cc/100'); /* Заглушка */
+            background-size: cover;
+        }
+
+        /* --- БАННЕР --- */
+        .banner {
+            margin: 0 15px 15px 15px;
+            background: linear-gradient(90deg, #2a1a0a, #1a1a1a);
+            border-radius: 12px;
+            padding: 10px;
             display: flex;
-            justify-content: center;
             align-items: center;
             position: relative;
-            padding-top: 20px;
+        }
+        .banner-img {
+            width: 40px; height: 40px; border-radius: 8px; background: #ff4500; margin-right: 10px;
+        }
+        .banner-text { font-size: 12px; font-weight: 600; flex-grow: 1; }
+        .banner-close { position: absolute; right: 10px; top: 10px; color: #888; font-size: 12px; }
+
+        /* --- ЗОНА КОЛЕСА --- */
+        .wheel-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-top: 10px;
         }
 
-        .wheel-outer-rings {
-            position: absolute;
-            width: 340px;
-            height: 340px;
-            border-radius: 50%;
-            border: 1px solid #151515;
+        .wheel-labels {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-        }
-        
-        .wheel-outer-rings::before {
-            content: '';
-            position: absolute;
-            width: 320px;
-            height: 320px;
-            border-radius: 50%;
-            border: 1px solid #111;
+            justify-content: space-between;
+            width: 280px;
+            font-size: 12px;
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 5px;
         }
 
         .wheel-container {
             position: relative;
-            width: 260px;
-            height: 260px;
-            border-radius: 50%;
-            background: #070707;
-            border: 2px solid #151515;
+            width: 240px;
+            height: 240px;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 30px rgba(0,0,0,0.8) inset;
         }
 
-        .wheel-container.spinning {
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.15) inset;
+        /* Кольца */
+        .ring-outer {
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            border: 15px solid #151515;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
         }
 
-        .chance-display {
-            text-align: center;
+        .ring-inner {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 10px solid #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #050505;
             z-index: 2;
         }
 
+        /* Прогресс (оранжевая заливка) */
+        .progress-ring {
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            border: 15px solid transparent;
+            border-bottom-color: #ff8c00;
+            border-right-color: #ff8c00;
+            transform: rotate(-45deg);
+            z-index: 1;
+            opacity: 0; /* Скрыто по умолчанию */
+            transition: opacity 0.3s;
+        }
+        .progress-ring.active { opacity: 1; }
+
+        .chance-display {
+            text-align: center;
+            z-index: 5;
+        }
+
         .chance-number {
-            font-size: 44px;
-            font-weight: 500;
+            font-size: 32px;
+            font-weight: 700;
             margin: 0;
-            color: #ffffff;
-            letter-spacing: -1px;
+            color: #fff;
         }
 
         .chance-label {
             font-size: 12px;
-            color: #666;
+            color: #888;
             margin-top: 2px;
-            font-weight: 500;
         }
 
-        /* --- СТРЕЛКА --- */
+        /* Стрелка */
         .arrow-wrapper {
             position: absolute;
-            width: 300px;
-            height: 300px;
+            width: 240px;
+            height: 240px;
             pointer-events: none;
-            z-index: 5;
-            transition: transform 3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            z-index: 6;
+            transition: transform 4s cubic-bezier(0.1, 0.7, 0.1, 1); /* Плавная остановка */
         }
 
         .arrow-svg {
             position: absolute;
-            bottom: 0;
+            bottom: -5px;
             left: 50%;
             transform: translateX(-50%);
-            width: 20px;
-            height: 40px;
+            width: 16px;
+            height: 24px;
+        }
+
+        /* --- КАРТОЧКИ ПОДАРКОВ --- */
+        .gift-cards {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 0 15px;
+            margin-top: -10px; /* Наложение на колесо */
+            z-index: 10;
+            position: relative;
+        }
+
+        .gift-card {
+            flex: 1;
+            background: #151515;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .gift-card.purple { background: linear-gradient(180deg, #2a1a3a, #151515); border-color: #4a2a6a; }
+
+        .gift-img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+
+        .gift-price-tag {
+            position: absolute;
+            top: -10px;
+            right: -5px;
+            background: #ffd700;
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .gift-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+            text-align: center;
+        }
+        .gift-subtitle {
+            font-size: 11px;
+            color: #777;
+            margin-top: 2px;
         }
 
         /* --- КНОПКИ ШАНСОВ --- */
-        .chance-controls {
+        .controls-area {
+            padding: 15px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 20px;
+            flex-direction: column;
+            gap: 12px;
             z-index: 10;
-            padding: 0 15px;
         }
 
-        .quick-bet-btn {
-            background: transparent;
+        .boost-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-lightning {
+            width: 45px;
+            height: 45px;
+            background: #151515;
             border: 1px solid #333;
-            color: #888;
-            padding: 8px 16px;
             border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            flex: 1;
-            text-align: center;
-        }
-
-        .quick-bet-btn.active {
-            border-color: #ffd700;
-            color: #ffd700;
-            background: rgba(255, 215, 0, 0.05);
-        }
-
-        .settings-btn {
-            background: transparent;
-            border: none;
-            color: #888;
-            cursor: pointer;
-            padding: 8px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            transition: transform 0.3s;
-        }
-        .settings-btn:hover { transform: rotate(90deg); color: #fff; }
-
-        /* --- НИЖНЯЯ ПАНЕЛЬ --- */
-        .bottom-panel {
-            padding: 20px;
-            background: #050505;
-            z-index: 10;
+            align-items: center;
+            color: #ffd700;
+            font-size: 20px;
         }
 
-        .slider-header {
+        .btn-boost {
+            flex-grow: 1;
+            background: #ffd700;
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-settings {
+            width: 45px;
+            height: 45px;
+            background: #151515;
+            border: 1px solid #333;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #888;
+        }
+
+        .chances-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 14px;
-            color: #555;
-            font-weight: 600;
-            align-items: center;
+            gap: 6px;
         }
 
-        .slider-value-wrap {
+        .chance-btn {
+            flex: 1;
+            background: #151515;
+            border: 1px solid #333;
+            color: #888;
+            padding: 10px 0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .chance-btn.active {
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+
+        /* --- ИНВЕНТАРЬ --- */
+        .inventory-tabs {
+            display: flex;
+            background: #151515;
+            border-radius: 12px;
+            padding: 4px;
+            margin: 0 15px;
+        }
+
+        .inv-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #777;
+            border-radius: 8px;
+        }
+
+        .inv-tab.active {
+            background: #222;
+            color: #fff;
+        }
+
+        .search-area {
+            margin: 15px;
+            background: #151515;
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .search-title {
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 5px;
         }
 
-        .slider-value {
-            color: #ffd700;
-            font-weight: 700;
-            font-size: 16px;
-        }
-
-        input[type=range] {
-            width: 100%;
-            -webkit-appearance: none;
-            background: transparent;
-            margin-bottom: 20px;
-        }
-
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 4px;
-            background: #222;
-            border-radius: 2px;
-        }
-
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 16px;
-            width: 16px;
-            border-radius: 50%;
-            background: #ffd700;
-            cursor: pointer;
-            margin-top: -6px;
-        }
-
-        /* Кнопка с иконкой */
-        .action-btn {
-            width: 100%;
-            background: #ffd700;
-            color: #000;
-            border: none;
-            padding: 16px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: transform 0.1s;
+        .search-row {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
+            gap: 5px;
         }
 
-        .action-btn:active {
-            transform: scale(0.98);
-        }
-
-        .action-btn:disabled {
-            background: #222;
-            color: #555;
-        }
-
-        /* Иконка кубка в кнопке */
-        .icon-cup {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* --- МОДАЛКА --- */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
+        .search-input {
+            flex: 1;
             background: #0a0a0a;
-            padding: 25px;
-            border-radius: 16px;
             border: 1px solid #222;
-            text-align: center;
-            width: 85%;
-            max-width: 320px;
-        }
-
-        .modal-content h3 { margin: 0 0 15px 0; color: #fff; font-weight: 600; }
-        
-        .modal-content input {
-            width: 100%;
-            padding: 12px;
-            background: #111;
-            border: 1px solid #333;
             border-radius: 8px;
+            padding: 8px 10px;
             color: #fff;
-            font-size: 16px;
-            margin-bottom: 15px;
-            text-align: center;
+            font-size: 13px;
         }
 
-        .modal-content button {
-            width: 100%;
-            padding: 12px;
-            background: #ffd700;
+        .search-btn {
+            background: #222;
             border: none;
             border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            color: #000;
+            width: 35px;
+            color: #888;
         }
 
-        .modal-content button.cancel {
-            background: #222;
-            color: #fff;
-            margin-top: 10px;
+        /* --- ПОДВАЛ --- */
+        .footer-nav {
+            display: flex;
+            justify-content: space-around;
+            background: #0a0a0a;
+            padding: 10px 0;
+            margin-top: auto;
+            border-top: 1px solid #151515;
         }
+
+        .nav-item {
+            color: #444;
+            font-size: 24px;
+        }
+        .nav-item.active { color: #ffd700; }
+
     </style>
 </head>
 <body>
 
-    <!-- Хедер -->
+    <!-- ХЕДЕР -->
     <div class="header">
-        <div class="balance-box">
-            <!-- Красивая 3D SVG звезда -->
-            <svg class="icon-star" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="url(#gold-grad)" stroke="#b8860b" stroke-width="1"/>
-                <defs>
-                    <linearGradient id="gold-grad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#FFF7A1"/>
-                        <stop offset="0.5" stop-color="#FFD700"/>
-                        <stop offset="1" stop-color="#FFA500"/>
-                    </linearGradient>
-                </defs>
-            </svg>
-            <span class="amount" id="balance">1000</span>
+        <div class="header-left">
+            <div class="user-count">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                100
+            </div>
+            <div class="balance-box">
+                <div class="star-icon"></div>
+                <span class="amount" id="balance">0.00</span>
+            </div>
+            <button class="deposit-btn">+ Пополнить</button>
         </div>
-        <button class="deposit-btn" onclick="tg.showAlert('Пополнение в разработке')">+ ПОПОЛНИТЬ</button>
+        <div class="profile-pic"></div>
     </div>
 
-    <!-- Зона игры -->
-    <div class="wheel-zone">
-        <div class="wheel-outer-rings"></div>
-        
+    <!-- БАННЕР -->
+    <div class="banner">
+        <div class="banner-img"></div>
+        <div class="banner-text">Бесплатный NFT Кейс</div>
+        <div class="banner-close">✕</div>
+    </div>
+
+    <!-- КОЛЕСО -->
+    <div class="wheel-section">
+        <div class="wheel-labels">
+            <span>50%</span>
+            <span>100%</span>
+            <span>50%</span>
+        </div>
         <div class="wheel-container" id="wheel">
-            <div class="chance-display">
-                <h1 class="chance-number" id="chanceDisplay">50.00%</h1>
-                <div class="chance-label">ШАНС ВЫИГРЫША</div>
+            <div class="ring-outer"></div>
+            <div class="progress-ring" id="progressRing"></div>
+            <div class="ring-inner">
+                <div class="chance-display">
+                    <h1 class="chance-number" id="chanceDisplay">0.00%</h1>
+                    <div class="chance-label">Средний шанс</div>
+                </div>
             </div>
-        </div>
-
-        <div class="arrow-wrapper" id="arrowWrapper">
-            <svg class="arrow-svg" viewBox="0 0 20 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 0L20 15H14V38H6V15H0L10 0Z" fill="#ffd700"/>
-                <circle cx="10" cy="38" r="2" fill="#ffd700"/>
-            </svg>
-        </div>
-    </div>
-
-    <!-- Быстрые кнопки -->
-    <div class="chance-controls">
-        <button class="quick-bet-btn active" onclick="setChance(50)">x2 (50%)</button>
-        <button class="quick-bet-btn" onclick="setChance(25)">x4 (25%)</button>
-        <button class="quick-bet-btn" onclick="setChance(10)">x10 (10%)</button>
-        
-        <!-- Шестеренка -->
-        <button class="settings-btn" onclick="openSettings()">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-            </svg>
-        </button>
-    </div>
-
-    <!-- Нижняя панель -->
-    <div class="bottom-panel">
-        <div class="slider-header">
-            <span>Ставка</span>
-            <div class="slider-value-wrap">
-                <!-- Иконка звезды рядом с цифрой ставки -->
-                <svg class="icon-star" style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="url(#gold-grad)" stroke="#b8860b" stroke-width="1"/>
+            <div class="arrow-wrapper" id="arrowWrapper">
+                <svg class="arrow-svg" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0L20 12H13V24H7V12H0L10 0Z" fill="#ffd700"/>
                 </svg>
-                <span class="slider-value" id="betValue">100</span>
             </div>
         </div>
-        <input type="range" min="10" max="1000" value="100" id="betSlider" oninput="updateBet(this.value)">
-        
-        <button class="action-btn" id="spinBtn" onclick="spin()">
-            <!-- Красивый 3D кубок (SVG) -->
-            <svg class="icon-cup" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 4H18V9C18 12.3137 15.3137 15 12 15C8.68629 15 6 12.3137 6 9V4Z" fill="url(#gold-grad-btn)" stroke="#b8860b" stroke-width="1.5"/>
-                <path d="M6 6H4C2.89543 6 2 6.89543 2 8V9C2 10.6569 3.34315 12 5 12H6" stroke="#b8860b" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M18 6H20C21.1046 6 22 6.89543 22 8V9C22 10.6569 20.6569 12 19 12H18" stroke="#b8860b" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M12 15V18" stroke="#b8860b" stroke-width="2"/>
-                <path d="M8 21H16" stroke="#b8860b" stroke-width="2" stroke-linecap="round"/>
-                <defs>
-                    <linearGradient id="gold-grad-btn" x1="6" y1="4" x2="18" y2="15" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#FFF7A1"/>
-                        <stop offset="0.5" stop-color="#FFD700"/>
-                        <stop offset="1" stop-color="#FFA500"/>
-                    </linearGradient>
-                </defs>
-            </svg>
-            Крутить
-        </button>
+        <div class="wheel-labels" style="margin-top: 5px;">
+            <span>0%</span>
+        </div>
     </div>
 
-    <!-- Модалка -->
-    <div class="modal" id="settingsModal">
-        <div class="modal-content">
-            <h3>Кастомный шанс</h3>
-            <input type="number" id="customChanceInput" placeholder="1-99" min="1" max="99">
-            <button onclick="applyCustomChance()">Применить</button>
-            <button class="cancel" onclick="closeSettings()">Отмена</button>
+    <!-- КАРТОЧКИ ПОДАРКОВ -->
+    <div class="gift-cards">
+        <div class="gift-card">
+            <div class="gift-price-tag">⭐ 100</div>
+            <!-- Заглушка для Кубка (тестовый подарок 1) -->
+            <img src="https://cdn-icons-png.flaticon.com/512/3113/3113549.png" class="gift-img" alt="Кубок">
+            <div class="gift-title">Кубок</div>
+            <div class="gift-subtitle">Обычный</div>
+        </div>
+        <div class="gift-card purple">
+            <div class="gift-price-tag" style="background:#007bff;color:white;">🌍 3.19</div>
+            <!-- Заглушка для Подарка (тестовый подарок 2) -->
+            <img src="https://cdn-icons-png.flaticon.com/512/4213/4213230.png" class="gift-img" alt="Подарок">
+            <div class="gift-title">Xmas Stocking</div>
+            <div class="gift-subtitle">#200912</div>
+        </div>
+    </div>
+
+    <!-- КНОПКИ УПРАВЛЕНИЯ -->
+    <div class="controls-area">
+        <div class="boost-row">
+            <div class="btn-lightning">⚡</div>
+            <button class="btn-boost" id="spinBtn" onclick="spin()">Забустить</button>
+            <div class="btn-settings" onclick="openSettings()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </div>
+        </div>
+
+        <div class="chances-row">
+            <div class="chance-btn" onclick="setChance(50, this)">x2</div>
+            <div class="chance-btn active" onclick="setChance(25, this)">x4</div>
+            <div class="chance-btn" onclick="setChance(1, this)">x100</div>
+            <div class="chance-btn" onclick="setChance(35, this)">35%</div>
+            <div class="chance-btn" onclick="setChance(55, this)">55%</div>
+            <div class="chance-btn" onclick="setChance(75, this)">75%</div>
+        </div>
+    </div>
+
+    <!-- ИНВЕНТАРЬ -->
+    <div class="inventory-tabs">
+        <div class="inv-tab">Мой инвентарь</div>
+        <div class="inv-tab active">Желаемые подарки</div>
+    </div>
+
+    <div class="search-area">
+        <div class="search-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            Выберите подарок
+        </div>
+        <div class="search-row">
+            <input type="text" class="search-input" placeholder="Цена От / До">
+            <button class="search-btn">🔍</button>
+        </div>
+    </div>
+
+    <!-- ПОДВАЛ -->
+    <div class="footer-nav">
+        <div class="nav-item">🎁</div>
+        <div class="nav-item">🏆</div>
+        <div class="nav-item active">▲</div>
+        <div class="nav-item">👤</div>
+        <div class="nav-item">🎵</div>
+    </div>
+
+    <!-- МОДАЛКА НАСТРОЕК -->
+    <div class="modal" id="settingsModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:100; justify-content:center; align-items:center;">
+        <div style="background:#111; padding:20px; border-radius:12px; width:80%; text-align:center;">
+            <h3>Свой шанс</h3>
+            <input type="number" id="customChanceInput" style="width:100%; padding:10px; margin:10px 0; background:#000; border:1px solid #333; color:#fff; text-align:center;">
+            <button onclick="applyCustomChance()" style="width:100%; padding:10px; background:#ffd700; border:none; border-radius:8px; font-weight:bold;">ОК</button>
+            <button onclick="document.getElementById('settingsModal').style.display='none'" style="width:100%; padding:10px; background:transparent; border:none; color:#888; margin-top:10px;">Отмена</button>
         </div>
     </div>
 
@@ -442,44 +560,35 @@
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
-        tg.setHeaderColor('#000000');
+        tg.setHeaderColor('#050505');
 
         let currentBalance = 1000;
-        let currentBet = 100;
-        let currentChance = 50;
+        let currentChance = 25; // По умолчанию х4
         let isSpinning = false;
         let currentRotation = 0;
 
+        // Обновление текста шанса
         function updateUI() {
             document.getElementById('balance').innerText = currentBalance;
-            document.getElementById('betValue').innerText = currentBet;
             document.getElementById('chanceDisplay').innerText = currentChance.toFixed(2) + "%";
         }
 
-        function updateBet(value) {
-            currentBet = parseInt(value);
-            if (currentBet > currentBalance) currentBet = currentBalance;
-            updateUI();
-        }
-
-        function setChance(chance) {
+        // Выбор шанса
+        function setChance(chance, element) {
             if (isSpinning) return;
             currentChance = chance;
-            document.querySelectorAll('.quick-bet-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.quick-bet-btn').forEach(btn => {
-                if (btn.innerText.includes(chance + '%')) btn.classList.add('active');
-            });
+            // Убираем активный класс со всех кнопок
+            document.querySelectorAll('.chance-btn').forEach(btn => btn.classList.remove('active'));
+            // Добавляем текущей
+            element.classList.add('active');
             updateUI();
         }
 
+        // Настройки
         function openSettings() {
             if (isSpinning) return;
             document.getElementById('settingsModal').style.display = 'flex';
             document.getElementById('customChanceInput').value = currentChance;
-        }
-
-        function closeSettings() {
-            document.getElementById('settingsModal').style.display = 'none';
         }
 
         function applyCustomChance() {
@@ -487,77 +596,77 @@
             if (isNaN(val) || val < 1) val = 1;
             if (val > 99) val = 99;
             currentChance = val;
-            document.querySelectorAll('.quick-bet-btn').forEach(btn => btn.classList.remove('active'));
-            closeSettings();
+            document.querySelectorAll('.chance-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('settingsModal').style.display = 'none';
             updateUI();
         }
 
+        // Логика кручения
         function spin() {
             if (isSpinning) return;
-            if (currentBet <= 0) return tg.showAlert("Введите ставку!");
-            if (currentBet > currentBalance) return tg.showAlert("Недостаточно средств!");
+            
+            // Ставка фиксированная (в оригинале она берется из выбранного подарка или слайдера, 
+            // здесь для теста ставим фикс 100)
+            const betAmount = 100; 
+            if (currentBalance < betAmount) return tg.showAlert("Недостаточно средств!");
 
             isSpinning = true;
             const btn = document.getElementById('spinBtn');
             const arrowWrapper = document.getElementById('arrowWrapper');
-            const wheel = document.getElementById('wheel');
+            const progressRing = document.getElementById('progressRing');
             
-            btn.disabled = true;
-            btn.innerHTML = "Крутим...";
-            wheel.classList.add('spinning');
+            btn.innerText = "Крутим...";
+            progressRing.classList.add('active'); // Включаем оранжевую подсветку
 
-            currentBalance -= currentBet;
+            currentBalance -= betAmount;
             updateUI();
 
+            // Определяем выигрыш
             const winRoll = Math.random() * 100;
             const isWin = winRoll <= currentChance;
 
-            let targetDegrees = isWin ? 180 : 0;
-            targetDegrees += (Math.random() * 60 - 30);
+            // Логика вращения
+            // 0 градусов - стрелка смотрит вниз.
+            // Если выиграл - оставляем внизу (0), если проиграл - уводим вверх (180).
+            let targetDegrees = isWin ? 0 : 180; 
+            targetDegrees += (Math.random() * 30 - 15); // Небольшой разброс
 
-            const extraSpins = 5 * 360;
-            
+            const extraSpins = 5 * 360; // 5 оборотов
             let currentMod = currentRotation % 360;
             let diff = targetDegrees - currentMod;
             if (diff < 0) diff += 360; 
 
             currentRotation += extraSpins + diff;
-
             arrowWrapper.style.transform = `rotate(${currentRotation}deg)`;
 
             setTimeout(() => {
-                wheel.classList.remove('spinning');
+                progressRing.classList.remove('active'); // Выключаем подсветку
+                
+                // Сброс угла для следующего вращения
                 arrowWrapper.style.transition = 'none';
                 currentRotation = currentRotation % 360;
                 arrowWrapper.style.transform = `rotate(${currentRotation}deg)`;
-
                 setTimeout(() => {
-                    arrowWrapper.style.transition = 'transform 3s cubic-bezier(0.2, 0.8, 0.2, 1)';
+                    arrowWrapper.style.transition = 'transform 4s cubic-bezier(0.1, 0.7, 0.1, 1)';
                 }, 50);
 
+                // Результат
                 if (isWin) {
                     let multiplier = 100 / currentChance;
-                    let winAmount = Math.floor(currentBet * multiplier);
+                    let winAmount = Math.floor(betAmount * multiplier);
                     currentBalance += winAmount;
                     tg.showAlert(`🎉 ВЫИГРАЛ!\nШанс: ${currentChance}%\n+${winAmount} ⭐`);
                     if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
                 } else {
-                    tg.showAlert(`💀 ПРОИГРАЛ!\nШанс: ${currentChance}%\n-${currentBet} ⭐`);
+                    tg.showAlert(`💀 ПРОИГРАЛ!\nШанс: ${currentChance}%\n-${betAmount} ⭐`);
                     if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
                 }
 
                 updateUI();
                 isSpinning = false;
-                btn.disabled = false;
-                // Возвращаем иконку кубка и текст
-                btn.innerHTML = `<svg class="icon-cup" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4H18V9C18 12.3137 15.3137 15 12 15C8.68629 15 6 12.3137 6 9V4Z" fill="url(#gold-grad-btn)" stroke="#b8860b" stroke-width="1.5"/><path d="M6 6H4C2.89543 6 2 6.89543 2 8V9C2 10.6569 3.34315 12 5 12H6" stroke="#b8860b" stroke-width="1.5" stroke-linecap="round"/><path d="M18 6H20C21.1046 6 22 6.89543 22 8V9C22 10.6569 20.6569 12 19 12H18" stroke="#b8860b" stroke-width="1.5" stroke-linecap="round"/><path d="M12 15V18" stroke="#b8860b" stroke-width="2"/><path d="M8 21H16" stroke="#b8860b" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="gold-grad-btn" x1="6" y1="4" x2="18" y2="15" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF7A1"/><stop offset="0.5" stop-color="#FFD700"/><stop offset="1" stop-color="#FFA500"/></linearGradient></defs></svg> Крутить`;
+                btn.innerText = "Забустить";
 
-                if (currentBalance <= 0) {
-                    btn.disabled = true;
-                    btn.innerText = "БАНКРОТ";
-                }
-
-            }, 3100);
+            }, 4100); // Ждем 4.1 сек (чуть больше анимации)
         }
 
         updateUI();
